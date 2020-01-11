@@ -1,9 +1,11 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
+# Modified by Rafael Nunes
+
 ARG BASE_CONTAINER=jupyter/scipy-notebook
 FROM $BASE_CONTAINER
 
-LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
+LABEL maintainer="Rafael Nunes <rafaelscnunes@gmail.com>"
 
 # Set when building on Travis so that certain long-running build steps can
 # be skipped to shorten build time.
