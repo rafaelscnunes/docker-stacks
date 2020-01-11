@@ -1,13 +1,14 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
+# Modified by Rafael Nunes
 
 # Ubuntu 18.04 (bionic) from 2019-10-29
 # https://github.com/tianon/docker-brew-ubuntu-core/commit/d4313e13366d24a97bd178db4450f63e221803f1
 ARG BASE_CONTAINER=ubuntu:bionic-20191029@sha256:6e9f67fa63b0323e9a1e587fd71c561ba48a034504fb804fd26fd8800039835d
 FROM $BASE_CONTAINER
 
-LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
-ARG NB_USER="jovyan"
+LABEL maintainer="Rafael Nunes <rafaelscnunes@gmail.com>"
+ARG NB_USER="scientist"
 ARG NB_UID="1000"
 ARG NB_GID="100"
 
@@ -49,7 +50,7 @@ RUN chmod a+rx /usr/local/bin/fix-permissions
 # Enable prompt color in the skeleton .bashrc before creating the default NB_USER
 RUN sed -i 's/^#force_color_prompt=yes/force_color_prompt=yes/' /etc/skel/.bashrc
 
-# Create NB_USER wtih name jovyan user with UID=1000 and in the 'users' group
+# Create NB_USER wtih name scientist user with UID=1000 and in the 'users' group
 # and make sure these dirs are writable by the `users` group.
 RUN echo "auth requisite pam_deny.so" >> /etc/pam.d/su && \
     sed -i.bak -e 's/^%admin/#%admin/' /etc/sudoers && \
@@ -69,7 +70,7 @@ ARG PYTHON_VERSION=default
 RUN mkdir /home/$NB_USER/work && \
     fix-permissions /home/$NB_USER
 
-# Install conda as jovyan and check the md5 sum provided on the download site
+# Install conda as scientist and check the md5 sum provided on the download site
 ENV MINICONDA_VERSION=4.7.10 \
     MINICONDA_MD5=1c945f2b3335c7b2b15130b1b2dc5cf4 \
     CONDA_VERSION=4.7.12
@@ -133,5 +134,5 @@ COPY jupyter_notebook_config.py /etc/jupyter/
 USER root
 RUN fix-permissions /etc/jupyter/
 
-# Switch back to jovyan to avoid accidental container runs as root
+# Switch back to scientist to avoid accidental container runs as root
 USER $NB_UID
